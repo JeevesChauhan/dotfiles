@@ -17,24 +17,32 @@
 ;==========================================================
 
 [colors]
-;background = ${xrdb:color0:#222}
 background = #222
 background-alt = #444
-;foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
 foreground-alt = #555
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
 
-[bar/mybar]
-monitor = DP-2
+;==========================================================
+;			Base Bar
+;	Other bars inherit this one
+;==========================================================
+[bar/base]
 width = 100%
 height = 27
+radius = 0.0
+fixed-center = true
+
+;==========================================================
+;                   Main bar
+;==========================================================
+[bar/mybar]
+monitor = DP-2
+inherit = bar/base
 ;offset-x = 1%
 ;offset-y = 1%
-radius = 0.0
-fixed-center = false
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -56,8 +64,57 @@ font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-2 = siji:pixelsize=10;1
 
 modules-left = bspwm i3
-modules-center = mpd
-modules-right = filesystem xbacklight alsa pulseaudio xkeyboard memory cpu wlan eth battery temperature date powermenu
+modules-center = date
+modules-right = filesystem xbacklight alsa pulseaudio xkeyboard memory cpu wlan eth battery temperature powermenu
+
+tray-position = right
+tray-padding = 2
+;tray-background = #0063ff
+
+;wm-restack = bspwm
+;wm-restack = i3
+
+;override-redirect = true
+
+;scroll-up = bspwm-desknext
+;scroll-down = bspwm-deskprev
+
+;scroll-up = i3wm-wsnext
+;scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+;==========================================================
+;                   secondary bar
+;==========================================================
+[bar/secondBar]
+monitor = HDMI-0
+inherit = bar/base
+;offset-x = 1%
+;offset-y = 1%
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 0
+border-color = #00000000
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = fixed:pixelsize=10;1
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = siji:pixelsize=10;1
+
+modules-center = i3
+modules-right = date
 
 tray-position = right
 tray-padding = 2
@@ -138,6 +195,28 @@ wrapping-scroll = false
 ; Only show workspaces on the same output as the bar
 ;pin-workspaces = true
 
+; Split worksapce name on ':'
+strip-wsnumbers = true
+
+; Allow clicking to focus workspaces
+enable-click = true
+
+; Use fuzzy matching on labels when assigning icons to workspaces
+; fuzzy-match = true
+
+; ws-icon-[0-9] = <label>;<icon>
+; Match the <label> to i3 config file
+ws-icon-0 = 1:I
+ws-icon-1 = 2:II
+ws-icon-2 = 3:III
+ws-icon-3 = 4:IV
+ws-icon-4 = 5:V
+ws-icon-5 = 6:VI
+ws-icon-6 = 7:VII
+ws-icon-7 = 8:VIII
+ws-icon-8 = 9:IX
+ws-icon-9 = 10:X
+
 label-mode-padding = 2
 label-mode-foreground = #000
 label-mode-background = ${colors.primary}
@@ -165,7 +244,6 @@ label-urgent-padding = 2
 
 ; Separator in between workspaces
 ; label-separator = |
-
 
 [module/mpd]
 type = internal/mpd
