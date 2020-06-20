@@ -8,51 +8,46 @@
 #   ██║██████╔╝              ╚██████╔╝██║  ██║██║     ███████║
 #   ╚═╝╚═════╝                ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚══════╝
 #
+# Please see https://i3wm.org/docs/userguide.html for a 
+# complete reference!
 #
 #=============================================================
-# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+
+#=============================================================
+#       Navigation/ launching
+#=============================================================
 
 set $mod Mod1
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-font pango:monospace 8
-
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
-
-# The combination of xss-lock, nm-applet and pactl is a popular choice, so
-# they are included here as an example. Modify as you see fit.
-
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
-
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec rofi -show run
+
+# Program launcher
+bindsym $mod+d exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
-#=============================================================
-#       Program Launcher
-#=============================================================
-bindsym $mod+d exec rofi -show run
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Where to put next window
+# Across X-axis (horizontal)
+bindsym $mod+x split h
+# Across Y-axis (vertical)
+bindsym $mod+y split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -75,7 +70,48 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 #=============================================================
-#       Workspaces + Navigation
+#       Gaps
+#=============================================================
+smart_gaps on
+gaps inner 2
+gaps outer 2
+
+
+#=============================================================
+#       Font related (not used)
+#=============================================================
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:monospace 8
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:DejaVu Sans Mono 8
+
+#=============================================================
+#       dunno cba
+#=============================================================
+
+# The combination of xss-lock, nm-applet and pactl is a popular choice, so
+# they are included here as an example. Modify as you see fit.
+
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
+
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+#=============================================================
+#       Workspaces
 #=============================================================
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -114,18 +150,6 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
-# change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
 # move focused window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
@@ -138,11 +162,8 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# Where to put next window
-# Across X-axis (horizontal)
-bindsym $mod+x split h
-# Across Y-axis (vertical)
-bindsym $mod+y split v
+# Remove title
+default_border pixel 1
 
 #=============================================================
 #       Loading/ Restarting Config
@@ -184,15 +205,16 @@ bindsym $mod+r mode "resize"
 #=============================================================
 #       Status Bar
 #=============================================================
+
+# Polybar status bar.
+# This launches both bars for both monitors
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 #bar {
 #        status_command i3status
 #}
-
-# Polybar status bar.
-# This launches both bars for both monitors
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 #=============================================================
 #       Background
@@ -200,5 +222,4 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always feh --bg-scale ~/Images/mountain.jpg
 
 
-# Remove title
-default_border pixel 1
+
