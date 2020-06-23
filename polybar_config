@@ -15,6 +15,7 @@
 ;   The README contains a lot of information
 ;
 ;==========================================================
+;
 
 [colors]
 background = #222
@@ -41,8 +42,10 @@ fixed-center = true
 [bar/mybar]
 monitor = DP-2
 inherit = bar/base
-;offset-x = 1%
-;offset-y = 1%
+
+; Lets us move the status bar around
+; Make a dummy bar underneath with the right height to allow this to work
+; override-redirect = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -59,17 +62,17 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = fixed:pixelsize=10;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=10;1
+font-0 = fixed:pixelsize=15;1
+font-1 = unifont:fontformat=truetype:size=13:antialias=false;0
+font-2 = siji:pixelsize=15;1
 
 modules-left = bspwm i3
 modules-center = date
-modules-right = filesystem xbacklight alsa pulseaudio xkeyboard memory cpu wlan eth battery temperature powermenu
+modules-right =pulseaudio memory cpu wlan eth temperature powermenu
 
 tray-position = right
 tray-padding = 2
-;tray-background = #0063ff
+tray-background = #0063ff
 
 ;wm-restack = bspwm
 ;wm-restack = i3
@@ -88,9 +91,11 @@ cursor-scroll = ns-resize
 ;==========================================================
 ;                   secondary bar
 ;==========================================================
+;Visual bar
 [bar/secondBar]
 monitor = HDMI-0
 inherit = bar/base
+bottom = true
 ;offset-x = 1%
 ;offset-y = 1%
 
@@ -114,7 +119,7 @@ font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-2 = siji:pixelsize=10;1
 
 modules-center = i3
-modules-right = date
+modules-left = date
 
 tray-position = right
 tray-padding = 2
@@ -133,6 +138,12 @@ tray-padding = 2
 
 cursor-click = pointer
 cursor-scroll = ns-resize
+
+;Hidden bar
+[bar/secondSupport]
+monitor = HDMI-0
+inherit = bar/base
+bottom = true
 
 [module/xwindow]
 type = internal/xwindow
@@ -195,8 +206,6 @@ wrapping-scroll = false
 ; Only show workspaces on the same output as the bar
 ;pin-workspaces = true
 
-; Split worksapce name on ':'
-strip-wsnumbers = true
 
 ; Allow clicking to focus workspaces
 enable-click = true
@@ -204,20 +213,6 @@ enable-click = true
 ; Use fuzzy matching on labels when assigning icons to workspaces
 ; fuzzy-match = true
 
-; ws-icon-[0-9] = <label>;<icon>
-; Match the <label> to i3 config file
-ws-icon-0 = 1:I
-ws-icon-1 = 2:II
-ws-icon-2 = 3:III
-ws-icon-3 = 4:IV
-ws-icon-4 = 5:V
-ws-icon-5 = 6:VI
-ws-icon-6 = 7:VII
-ws-icon-7 = 8:VIII
-ws-icon-8 = 9:IX
-ws-icon-9 = 10:X
-
-label-mode-padding = 2
 label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 
@@ -339,16 +334,16 @@ type = internal/date
 interval = 5
 
 date =
-date-alt = " %Y-%m-%d"
+date-alt = " | %A %B | %d-%m-%Y"
 
 time = %H:%M
-time-alt = %H:%M:%S
+time-alt = %H:%M
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #0a6cf5
 
-label = %date% %time%
+label = %time% %date% 
 
 [module/pulseaudio]
 type = internal/pulseaudio
